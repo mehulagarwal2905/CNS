@@ -18,8 +18,9 @@ def encrypt(text,s):
 #check the above function
 text = input("Enter text to encrypt: ")
 s = 3
+encrypted_text = encrypt(text, s)
 print (" Given text  : " + text)
 print ("Shift is 3 as it is the default value for Caesar Cipher")
-print ("Cipher: " + encrypt(text,s))
+print ("Cipher: " + encrypted_text)
 
-print ("Decoded: " + encrypt(encrypt(text,s),-s))
+print ("Decoded: " + encrypt(encrypted_text,-s))
