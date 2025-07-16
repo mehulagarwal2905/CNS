@@ -17,7 +17,9 @@ def encrypt(text,s):
 
 #check the above function
 text = input("Enter text to encrypt: ")
-s = int(input("Enter shift value: "))
-print (" GGiven text  : " + text)
-print ("Shift : " + str(s))
+s = 3
+print (" Given text  : " + text)
+print ("Shift is 3 as it is the default value for Caesar Cipher")
 print ("Cipher: " + encrypt(text,s))
+
+print ("Decoded: " + encrypt(encrypt(text,s),-s))
