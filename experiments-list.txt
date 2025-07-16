@@ -1,0 +1,10 @@
+1. Perform Encryption and Decryption using the following Substitution techniques (i)Caesar cipher (ii) Playfair cipher (iii) Hill Cipher (iv) Vigenère cipher.
+2. Implement Transposition Cipher using Rail Fence Technique.
+3. Implement Data Encryption Standard (DES) algorithm for Symmetric key encryption.
+4. Implement Advanced Encryption Standard (AES) algorithm for Symmetric key encryption.
+5. Implement RSA Asymmetric key encryption algorithm.
+6. Demonstrate how two parties can securely exchange secret keys over an insecure communication channel using the Diffie-Hellman key exchange algorithm.
+7. Implement MD5 cryptographic hash function.
+8. Implement SHA-512 cryptographic hash function.
+9. Implement Digital Signature Standard (DSS) Algorithm.
+10. Demonstrate Intrusion Detection System (ids) using any tool eg. Snort or any other s/w.
