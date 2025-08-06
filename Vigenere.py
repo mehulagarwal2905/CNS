@@ -19,6 +19,9 @@ def vigenere_cipher_d(text, key):
         c+=chr((ord(text[i])-ord(key[j])-2*ord('A'))%26+ord('A'))
         
     return c
+print("Vigenere Cipher Encryption")
+print("Name: Mehul Agarwal")        
+print("Roll No: 160123749047")
 text=input("Enter plain text here ")
 key=input("Enter key here ")
 ct=vigenere_cipher_e(text, key)

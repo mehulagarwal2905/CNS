@@ -16,11 +16,14 @@ def encrypt(text,s):
     return result
 
 #check the above function
+print("Caesar Cipher Encryption")
+print("Name: Mehul Agarwal")
+print("Roll No: 160123749047")
 text = input("Enter text to encrypt: ")
 s = 3
 encrypted_text = encrypt(text, s)
 print (" Given text  : " + text)
-print ("Shift is 3 as it is the default value for Caesar Cipher")
+print ("Shift is 3 as it is the default key for Caesar Cipher")
 print ("Cipher: " + encrypted_text)
 
 print ("Decoded: " + encrypt(encrypt(text,s),-s))
