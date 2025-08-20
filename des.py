@@ -145,13 +145,21 @@ def des_encrypt(block, key):
     block = permute(R+L, FP)
     return block
 
-# --- Example usage ---
-plaintext = [int(x) for x in '{:064b}'.format(0x0123456789ABCDEF)]
-key = [int(x) for x in '{:064b}'.format(0x0123456789ABCDEF)]
+# --- Example usage with dynamic input ---
+# Input as hexadecimal strings
+plaintext_hex = input("Enter 16-digit plaintext in hex (e.g., 0123456789ABCDEF): ")
+key_hex = input("Enter 16-digit key in hex (e.g., 0123456789ABCDEF): ")
+
+# Convert hex to 64-bit binary list
+plaintext = [int(x) for x in '{:064b}'.format(int(plaintext_hex, 16))]
+key = [int(x) for x in '{:064b}'.format(int(key_hex, 16))]
+
+# Encrypt
 cipher = des_encrypt(plaintext, key)
-print("Ciphertext:", ''.join(map(str,cipher)))
-# Assuming `cipher` is your final 64-bit list of 0s and 1s
+
+# Convert final cipher list to hex
 cipher_hex = hex(int(''.join(map(str, cipher)), 2))[2:].upper()
 print("Ciphertext:", cipher_hex)
+
 
 
