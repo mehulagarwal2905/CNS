@@ -1,4 +1,5 @@
 # Row Transposition Cipher
+print("Pawan Mohit 160123749301")
 
 # Encryption
 plaintext = input("Enter plaintext: ").replace(" ", "").upper()
@@ -22,23 +23,20 @@ for _ in range(rows):
         index += 1
     matrix.append(row)
 
-# Encrypt: read columns based on key order
+# Encrypt: read columns based on sorted key order with position
 cipher = ""
-for num in sorted(key_order):
-    col_index = key_order.index(num)
+for num, _ in sorted(enumerate(key_order), key=lambda x: x[1]):
     for r in range(rows):
-        cipher += matrix[r][col_index]
+        cipher += matrix[r][num]
 
 print("Encrypted text:", cipher)
 
 # Decryption
-# Create empty matrix
 dec_matrix = [[''] * cols for _ in range(rows)]
 index = 0
-for num in sorted(key_order):
-    col_index = key_order.index(num)
+for num, _ in sorted(enumerate(key_order), key=lambda x: x[1]):
     for r in range(rows):
-        dec_matrix[r][col_index] = cipher[index]
+        dec_matrix[r][num] = cipher[index]
         index += 1
 
 # Read row-wise for plaintext

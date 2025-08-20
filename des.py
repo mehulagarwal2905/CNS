@@ -164,30 +164,48 @@ def des_decrypt(block, key):
     block = permute(R+L, FP)
     return block
 
+# --- Helper to split input into 64-bit blocks ---
+def hex_to_64bit_blocks(hex_str):
+    # Remove leading '0x' if present
+    hex_str = hex_str.lstrip('0x').upper()
+    # Pad with leading zeros to make full blocks
+    if len(hex_str) % 16 != 0:
+        hex_str = hex_str.zfill((len(hex_str)//16 + 1)*16)
+    blocks = [hex_str[i:i+16] for i in range(0, len(hex_str), 16)]
+    return blocks
 
-# --- Example usage with dynamic input ---
-# Details 
+def des_process_blocks(blocks, key, encrypt=True):
+    result_blocks = []
+    for block_hex in blocks:
+        block = [int(x) for x in '{:064b}'.format(int(block_hex, 16))]
+        if encrypt:
+            processed = des_encrypt(block, key)
+        else:
+            processed = des_decrypt(block, key)
+        processed_hex = hex(int(''.join(map(str, processed)), 2))[2:].upper().zfill(16)
+        result_blocks.append(processed_hex)
+    return ''.join(result_blocks)
+
+# --- Example usage ---
 print("Name: Pawan Mohit")
 print("Roll No: 160123749301")
 
-# Input as hexadecimal strings
-plaintext_hex = input("Enter 16-digit plaintext in hex (e.g., 0123456789ABCDEF): ")
-key_hex = input("Enter 16-digit key in hex (e.g., 0123456789ABCDEF): ")
+plaintext_hex = input("Enter plaintext in hex (any length): ")
+key_hex = input("Enter key in hex (up to 16 hex digits, will pad if shorter): ")
 
-
-# Convert hex to 64-bit binary list
-plaintext = [int(x) for x in '{:064b}'.format(int(plaintext_hex, 16))]
+# Prepare key (must be 16 hex digits / 64 bits)
+key_hex = key_hex.zfill(16)
 key = [int(x) for x in '{:064b}'.format(int(key_hex, 16))]
 
-# Encrypt
-cipher = des_encrypt(plaintext, key)
+# Split plaintext into 64-bit blocks
+blocks = hex_to_64bit_blocks(plaintext_hex)
 
-# Convert final cipher list to hex
-cipher_hex = hex(int(''.join(map(str, cipher)), 2))[2:].upper()
-print("Ciphertext:", cipher_hex)
+# Encrypt all blocks
+ciphertext_hex = des_process_blocks(blocks, key, encrypt=True)
+print("Ciphertext:", ciphertext_hex)
 
-decrypted = des_decrypt(cipher, key)
-decrypted_hex = hex(int(''.join(map(str, decrypted)), 2))[2:].upper()
+# Decrypt all blocks
+decrypted_hex = des_process_blocks([ciphertext_hex[i:i+16] for i in range(0, len(ciphertext_hex), 16)], key, encrypt=False)
 print("Decrypted Plaintext:", decrypted_hex)
 
 
