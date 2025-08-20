@@ -145,6 +145,19 @@ def des_encrypt(block, key):
     block = permute(R+L, FP)
     return block
 
+# --- Decryption ---
+def des_decrypt(block, key):
+    block = permute(block, IP)
+    L, R = block[:32], block[32:]
+    keys = key_schedule(key)
+    # Reverse round keys for decryption
+    for i in range(16):
+        temp = R
+        R = xor(L, feistel(R, keys[15-i]))
+        L = temp
+    block = permute(R+L, FP)
+    return block
+
 # --- Example usage with dynamic input ---
 # Input as hexadecimal strings
 plaintext_hex = input("Enter 16-digit plaintext in hex (e.g., 0123456789ABCDEF): ")
@@ -161,5 +174,8 @@ cipher = des_encrypt(plaintext, key)
 cipher_hex = hex(int(''.join(map(str, cipher)), 2))[2:].upper()
 print("Ciphertext:", cipher_hex)
 
+decrypted = des_decrypt(cipher, key)
+decrypted_hex = hex(int(''.join(map(str, decrypted)), 2))[2:].upper()
+print("Decrypted Plaintext:", decrypted_hex)
 
 
