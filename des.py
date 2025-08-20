@@ -141,27 +141,39 @@ def des_encrypt(block, key):
         temp = R
         R = xor(L, feistel(R, keys[i]))
         L = temp
-        print(f"Round {i+1}: L={L}, R={R}")  # Show all rounds
+        # Format as 32-bit string for readability
+        L_str = ''.join(map(str, L))
+        R_str = ''.join(map(str, R))
+        print(f"Round {i+1}: L={L_str} R={R_str}")
     block = permute(R+L, FP)
     return block
+
 
 # --- Decryption ---
 def des_decrypt(block, key):
     block = permute(block, IP)
     L, R = block[:32], block[32:]
     keys = key_schedule(key)
-    # Reverse round keys for decryption
     for i in range(16):
         temp = R
         R = xor(L, feistel(R, keys[15-i]))
         L = temp
+        L_str = ''.join(map(str, L))
+        R_str = ''.join(map(str, R))
+        print(f"Decrypt Round {i+1}: L={L_str} R={R_str}")
     block = permute(R+L, FP)
     return block
 
+
 # --- Example usage with dynamic input ---
+# Details 
+print("Name: Pawan Mohit")
+print("Roll No: 160123749301")
+
 # Input as hexadecimal strings
 plaintext_hex = input("Enter 16-digit plaintext in hex (e.g., 0123456789ABCDEF): ")
 key_hex = input("Enter 16-digit key in hex (e.g., 0123456789ABCDEF): ")
+
 
 # Convert hex to 64-bit binary list
 plaintext = [int(x) for x in '{:064b}'.format(int(plaintext_hex, 16))]
