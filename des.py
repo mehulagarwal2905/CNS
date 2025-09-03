@@ -1,4 +1,4 @@
-# Complete DES in Python (64-bit block, 16 rounds)
+# Complete DES in Python with full step-by-step printing
 
 # --- Tables ---
 IP = [58,50,42,34,26,18,10,2,
@@ -54,7 +54,6 @@ PC2 = [14,17,11,24,1,5,
 SHIFT = [1, 1, 2, 2, 2, 2, 2, 2,
          1, 2, 2, 2, 2, 2, 2, 1]
 
-# --- All 8 S-Boxes ---
 S_BOX = [
     # S1
     [[14,4,13,1,2,15,11,8,3,10,6,12,5,9,0,7],
@@ -129,46 +128,55 @@ def key_schedule(key):
 
 def feistel(R, K):
     expanded = permute(R, E)
+    print(f"    Expansion R->48b: {''.join(map(str, expanded))}")
     temp = xor(expanded, K)
+    print(f"    XOR with round key: {''.join(map(str, temp))}")
     substituted = sbox_substitute(temp)
-    return permute(substituted, P)
+    print(f"    S-Box output ->32b: {''.join(map(str, substituted))}")
+    permuted = permute(substituted, P)
+    print(f"    After P-permutation: {''.join(map(str, permuted))}")
+    return permuted
 
 def des_encrypt(block, key):
+    print("\n=== New Block ===")
+    print("Plaintext bits:", ''.join(map(str, block)))
     block = permute(block, IP)
+    print("After Initial Permutation:", ''.join(map(str, block)))
     L, R = block[:32], block[32:]
     keys = key_schedule(key)
     for i in range(16):
+        print(f"\n-- Round {i+1} --")
+        print("L:", ''.join(map(str, L)))
+        print("R:", ''.join(map(str, R)))
         temp = R
         R = xor(L, feistel(R, keys[i]))
         L = temp
-        # Format as 32-bit string for readability
-        L_str = ''.join(map(str, L))
-        R_str = ''.join(map(str, R))
-        print(f"Round {i+1}: L={L_str} R={R_str}")
+        print("After Round L:", ''.join(map(str, L)))
+        print("After Round R:", ''.join(map(str, R)))
     block = permute(R+L, FP)
+    print("After Final Permutation:", ''.join(map(str, block)))
     return block
 
-
-# --- Decryption ---
 def des_decrypt(block, key):
+    print("\n=== Decrypt Block ===")
     block = permute(block, IP)
     L, R = block[:32], block[32:]
     keys = key_schedule(key)
     for i in range(16):
+        print(f"\n-- Decrypt Round {i+1} --")
+        print("L:", ''.join(map(str, L)))
+        print("R:", ''.join(map(str, R)))
         temp = R
         R = xor(L, feistel(R, keys[15-i]))
         L = temp
-        L_str = ''.join(map(str, L))
-        R_str = ''.join(map(str, R))
-        print(f"Decrypt Round {i+1}: L={L_str} R={R_str}")
+        print("After Round L:", ''.join(map(str, L)))
+        print("After Round R:", ''.join(map(str, R)))
     block = permute(R+L, FP)
+    print("After Final Permutation:", ''.join(map(str, block)))
     return block
 
-# --- Helper to split input into 64-bit blocks ---
 def hex_to_64bit_blocks(hex_str):
-    # Remove leading '0x' if present
     hex_str = hex_str.lstrip('0x').upper()
-    # Pad with leading zeros to make full blocks
     if len(hex_str) % 16 != 0:
         hex_str = hex_str.zfill((len(hex_str)//16 + 1)*16)
     blocks = [hex_str[i:i+16] for i in range(0, len(hex_str), 16)]
@@ -186,26 +194,22 @@ def des_process_blocks(blocks, key, encrypt=True):
         result_blocks.append(processed_hex)
     return ''.join(result_blocks)
 
-# --- Example usage ---
+# --- Main Execution ---
 print("Name: Pawan Mohit")
 print("Roll No: 160123749301")
 
 plaintext_hex = input("Enter plaintext in hex (any length): ")
 key_hex = input("Enter key in hex (up to 16 hex digits, will pad if shorter): ")
 
-# Prepare key (must be 16 hex digits / 64 bits)
 key_hex = key_hex.zfill(16)
 key = [int(x) for x in '{:064b}'.format(int(key_hex, 16))]
 
-# Split plaintext into 64-bit blocks
 blocks = hex_to_64bit_blocks(plaintext_hex)
 
-# Encrypt all blocks
+print("\n=== Encryption ===")
 ciphertext_hex = des_process_blocks(blocks, key, encrypt=True)
-print("Ciphertext:", ciphertext_hex)
+print("\nCiphertext (hex):", ciphertext_hex)
 
-# Decrypt all blocks
+print("\n=== Decryption ===")
 decrypted_hex = des_process_blocks([ciphertext_hex[i:i+16] for i in range(0, len(ciphertext_hex), 16)], key, encrypt=False)
-print("Decrypted Plaintext:", decrypted_hex)
-
-
+print("\nDecrypted Plaintext (hex):", decrypted_hex)
