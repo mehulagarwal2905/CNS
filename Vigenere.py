@@ -20,8 +20,8 @@ def vigenere_cipher_d(text, key):
         
     return c
 print("Vigenere Cipher Encryption")
-print("Name: Mehul Agarwal")        
-print("Roll No: 160123749047")
+print("Name: Pawan Mohit")
+print("Roll No.: 160123749301")
 text=input("Enter plain text here ")
 key=input("Enter key here ")
 ct=vigenere_cipher_e(text, key)

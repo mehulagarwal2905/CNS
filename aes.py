@@ -219,6 +219,8 @@ for i in range(0, len(ct), 16):
 dt = unpad(dt)
 
 print("\n=== Summary ===")
+print("Name: Pawan Mohit")
+print("Roll No.: 160123749301")
 print("Key       :", key.decode(errors='ignore'))
 print("Plaintext :", msg.decode())
 print("Ciphertext (base64):", base64.b64encode(ct).decode())

@@ -83,8 +83,8 @@ def decrypt_playfair(cipher_text, key):
 
 # Example usage
 print("Playfair Cipher Encryption")
-print("Name: Mehul Agarwal")
-print("Roll No: 160123749047")
+print("Name: Pawan Mohit")
+print("Roll No.: 160123749301")
 key = input("Enter the key for Playfair cipher: ")
 
 plaintext = input("Enter the plaintext to encrypt: ")

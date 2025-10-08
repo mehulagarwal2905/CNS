@@ -1,5 +1,6 @@
 # Row Transposition Cipher
-print("Pawan Mohit 160123749301")
+print("Name: Pawan Mohit")
+print("Roll No.: 160123749301")
 
 # Encryption
 plaintext = input("Enter plaintext: ").replace(" ", "").upper()
