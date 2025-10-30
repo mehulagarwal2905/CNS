@@ -136,7 +136,6 @@ def feistel(R, K):
     permuted = permute(substituted, P)
     print(f"    After P-permutation: {''.join(map(str, permuted))}")
     return permuted
-
 def des_encrypt(block, key):
     print("\n=== New Block ===")
     print("Plaintext bits:", ''.join(map(str, block)))
@@ -197,6 +196,7 @@ def des_process_blocks(blocks, key, encrypt=True):
 # --- Main Execution ---
 print("Name: Pawan Mohit")
 print("Roll No: 160123749301")
+print("Data Encryption Standard (DES) algorithm for Symmetric Key Encryption")
 
 plaintext_hex = input("Enter plaintext in hex (any length): ")
 key_hex = input("Enter key in hex (up to 16 hex digits, will pad if shorter): ")

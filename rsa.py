@@ -22,7 +22,7 @@ def decrypt(encrypted_text, d, n):
     return ''.join(chr(pow(x, d, n)) for x in nums)
 
 if __name__ == "__main__":
-    print("Name: Ch Pawan Mohit")
+    print("Name: Pawan Mohit")
     print("Roll No.: 160123749301")
     p = int(input("Enter prime number p: "))
     q = int(input("Enter prime number q: "))

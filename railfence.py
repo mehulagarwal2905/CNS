@@ -7,7 +7,8 @@ def decrypt(s, c):
     return ''.join(c[j*r + i] for i in range(r) for j in range(s))
 
 # Main
-print("Pawan Mohit 160123749301")
+print("Name: Pawan Mohit")
+print("Roll No.: 160123749301")
 s = int(input("Block size: "))
 t = input("Text: ")
 c = encrypt(s, t)

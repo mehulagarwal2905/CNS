@@ -1,3 +1,7 @@
+# Row Transposition Cipher
+print("Name: Pawan Mohit")
+print("Roll No.: 160123749301")
+
 # Encryption
 plaintext = input("Enter plaintext: ").replace(" ", "").upper()
 key = input("Enter key (e.g., 3142): ")
